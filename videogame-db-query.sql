@@ -194,3 +194,16 @@ from videogames
 join reviews 
 on videogames.id = reviews.videogame_id
 where reviews.rating = 5
+
+--BONUS
+
+--n11
+select COUNT(rating) as n_reating, AVG(rating)as media
+from reviews
+where videogame_id = 412
+
+--n12
+select COUNT(id) as n_videogiochi
+from videogames
+where software_house_id = 1 
+and DATEPART(YEAR, release_date) = 2018
