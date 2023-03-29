@@ -7,15 +7,14 @@ join reviews
 on players.id = reviews.player_id
 group by players.[name], players.lastname, players.nickname, players.city
 
--- 2- Sezionare tutti i videogame dei tornei tenuti nel 2016, mostrandoli una sola volta (226) ??????
-select videogames.id,videogames.[name],tournaments.[name], COUNT(videogames.id) as n_volte
-from tournaments
+-- 2- Sezionare tutti i videogame dei tornei tenuti nel 2016, mostrandoli una sola volta (226)
+select distinct videogames.id, videogames.name
+from videogames
 join tournament_videogame
-on tournaments.id = tournament_videogame.tournament_id
-join videogames
 on videogames.id = tournament_videogame.videogame_id
-where tournaments.year = 2016
-group by videogames.id, videogames.[name],tournaments.[name]
+join tournaments
+on tournament_videogame.tournament_id = tournaments.id
+where year like 2016
 
 -- 3- Mostrare le categorie di ogni videogioco (1718)
 select videogames.[name], categories.[name]
