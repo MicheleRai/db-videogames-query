@@ -96,3 +96,44 @@ join award_videogame
 on videogames.id = award_videogame.videogame_id
 where tournaments.year = '2019'
 and award_videogame.year = '2018'
+
+
+--group by
+
+--1- Contare quante software house ci sono per ogni paese (3)
+select software_houses.country, COUNT(software_houses.country) as n_software_houses
+from software_houses
+group by software_houses.country
+
+--2- Contare quante recensioni ha ricevuto ogni videogioco (del videogioco vogliamo solo l'ID) (500)
+select videogames.[name], COUNT(reviews.id) as n_recensioni
+from reviews
+join videogames
+on reviews.videogame_id = videogames.id
+group by reviews.videogame_id, videogames.[name]
+
+--3- Contare quanti videogiochi hanno ciascuna classificazione PEGI (della classificazione PEGI vogliamo solo l'ID) (13)
+select pegi_labels.[name] ,COUNT(pegi_label_videogame.videogame_id) as n_videogiochi
+from pegi_labels
+join pegi_label_videogame 
+on pegi_labels.id = pegi_label_videogame.pegi_label_id
+group by pegi_labels.[name]
+
+--4- Mostrare il numero di videogiochi rilasciati ogni anno (11)
+select DATEPART(year, release_date), COUNT(id) as n_videogiochi
+from videogames
+group by DATEPART(YEAR, release_date)
+
+--5- Contare quanti videogiochi sono disponbiili per ciascun device (del device vogliamo solo l'ID) (7)
+select devices.name, COUNT(device_videogame.videogame_id) as n_videogiochi
+from devices
+join device_videogame 
+on devices.id = device_videogame.device_id
+group by devices.name
+
+--6- Ordinare i videogame in base alla media delle recensioni (del videogioco vogliamo solo l'ID) (500)
+select videogames.name, AVG(reviews.rating)
+from videogames
+join reviews ON videogames.id = reviews.videogame_id
+group by videogames.name
+order by AVG(reviews.rating)
