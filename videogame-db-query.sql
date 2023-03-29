@@ -137,3 +137,60 @@ from videogames
 join reviews ON videogames.id = reviews.videogame_id
 group by videogames.name
 order by AVG(reviews.rating)
+
+
+--select
+
+--1- Selezionare tutte le software house americane (3)
+select *
+from software_houses
+where country like 'United States'
+
+--2- Selezionare tutti i giocatori della città di 'Rogahnland' (2)
+select *
+from players
+where city like 'Rogahnland'
+
+--3- Selezionare tutti i giocatori il cui nome finisce per "a" (220)
+select *
+from players
+where name LIKE '%a'
+
+--4- Selezionare tutte le recensioni scritte dal giocatore con ID = 800 (11)
+select *
+from reviews
+where player_id = 800
+
+--5- Contare quanti tornei ci sono stati nell'anno 2015 (9)
+select COUNT(id) as n_tornei
+from tournaments
+where year = 2015
+
+--6- Selezionare tutti i premi che contengono nella descrizione la parola 'facere' (2)
+select *
+from awards
+where description like '%facere%'
+
+--7- Selezionare tutti i videogame che hanno la categoria 2 (FPS) o 6 (RPG), mostrandoli una sola volta (del videogioco vogliamo solo l'ID) (287)
+select distinct videogames.name
+from videogames
+join category_videogame 
+on videogames.id = category_videogame.videogame_id
+where category_videogame.category_id = 2 OR category_videogame.category_id = 6
+
+--8- Selezionare tutte le recensioni con voto compreso tra 2 e 4 (2947)
+select * 
+from reviews
+where rating >= 2 AND rating <= 4
+
+--9- Selezionare tutti i dati dei videogiochi rilasciati nell'anno 2020 (46)
+select *
+from videogames
+where DATEPART(YEAR, release_date) = 2020
+
+--10- Selezionare gli id dei videogame che hanno ricevuto almeno una recensione da stelle, mostrandoli una sola volta (443)
+select distinct videogames.id
+from videogames
+join reviews 
+on videogames.id = reviews.videogame_id
+where reviews.rating = 5
